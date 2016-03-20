@@ -42,7 +42,7 @@ namespace TicTacToePlusGame.GameLogic
                 }
             } else
             {
-                throw new Exception("Onknown team");
+                throw new Exception("Unknown team");
             }
         }
 
@@ -59,14 +59,14 @@ namespace TicTacToePlusGame.GameLogic
 
         }
 
-        public int getOutsideCell(int x1, int y1)
+        public int GetOutsideCell(int x1, int y1)
         {
             if (x1 >= 3 && x1 < 0 && y1 >= 3 && y1 < 0) throw new IndexOutOfRangeException("Wrong args");
             return outsideField[x1, y1];
             
         }
 
-        public int getInsideCell(int x1, int y1, int x2, int y2)
+        public int GetInsideCell(int x1, int y1, int x2, int y2)
         {
             if (x1 >= 3 && x1 < 0 && y1 >= 3 && y1 < 0) throw new IndexOutOfRangeException("Wrong args");
             if (x2 >= 3 && x2 < 0 && y2 >= 3 && y2 < 0) throw new IndexOutOfRangeException("Wrong args");
@@ -75,54 +75,55 @@ namespace TicTacToePlusGame.GameLogic
 
         private bool IsWoninField(int team, int[,] field)
         {
-            int x = 0;
-            for (int y = 0; y < 3; y++)
+            for (int x = 0; x < 3; x++)
             {
-                int n = Math.Min(field.GetLength(0), x + 3);
-                int m = Math.Min(field.GetLength(1), y + 3);
-                if (m - y == 3)
+                for (int y = 0; y < 3; y++)
                 {
-                    for (int i = y; i < m; i++)
+                    int n = Math.Min(field.GetLength(0), x + 3);
+                    int m = Math.Min(field.GetLength(1), y + 3);
+                    if (m - y == 3)
                     {
-                        if (field[x, i] != team)
-                            break;
-                        if (i - y == 2)
+                        for (int i = y; i < m; i++)
                         {
-                            return true;
+                            if (field[x, i] != team)
+                                break;
+                            if (i - y == 2)
+                            {
+                                return true;
+                            }
                         }
                     }
-                }
 
-                if (n - x == 3)
-                {
-                    for (int i = x; i < n; i++)
+                    if (n - x == 3)
                     {
-                        if (field[i, y] != team)
-                            break;
-                        if (i - x == 2)
-                            return true;
+                        for (int i = x; i < n; i++)
+                        {
+                            if (field[i, y] != team)
+                                break;
+                            if (i - x == 2)
+                                return true;
 
+                        }
                     }
-                }
-                if (n - x == 3 && m - y == 3)
-                {
-                    for (int i = 0; i < 3; i++)
+                    if (n - x == 3 && m - y == 3)
                     {
-                        if (field[x + i, y + i] != team)
-                            break;
-                        if (i == 2)
-                            return true;
-
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (field[x + i, y + i] != team)
+                                break;
+                            if (i == 2)
+                                return true;
+                        }
                     }
-                }
-                if (n - x == 3 && y - 3 >= 0)
-                {
-                    for (int i = 0; i < 3; i++)
+                    if (n - x == 3 && y - 2 >= 0)
                     {
-                        if (field[x + i, y - i] != team)
-                            break;
-                        if (i == 2)
-                            return true;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (field[x + i, y - i] != team)
+                                break;
+                            if (i == 2)
+                                return true;
+                        }
                     }
                 }
             }
